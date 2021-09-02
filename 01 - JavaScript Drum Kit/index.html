@@ -56,18 +56,19 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
-      function removeTransition(e) {
-        if (e.propertyName !== "transform") return //skip it if it's not a transition
-        this.classList.remove("playing")
-      }
       function playSound(e) {
         const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
         const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
-        if (!audio) return //stop function from running
+        if (!audio) return
 
         audio.currentTime = 0 //rewind to start
         audio.play()
         key.classList.add("playing")
+      }
+
+      function removeTransition(e) {
+        if (e.propertyName !== "transform") return //skip it if it's not a transition
+        this.classList.remove("playing")
       }
 
       const keys = document.querySelectorAll(".key")
@@ -76,3 +77,28 @@
     </script>
   </body>
 </html>
+<!--                                                               //STEP 3
+function removeTransition(e) {                       //create function to remove transition
+  if (e.propertyName !== "transform") return         //skip it if propertyName is not a transition
+  this.classList.remove("playing")                   //remove class 'playing'
+}                                                                               //STEP 2
+function playSound(e) {                                                   //create function to playSound
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)  //select audio by data-key
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)     //alternatively, select keys by data-key
+  if (!audio) return //stop function from running                         //if not audio, don't run
+                                                                                  //STEP 2.5
+  audio.currentTime = 0 //rewind to start                                 //rewind audio to start on each press
+  audio.play()                                                            //play audio
+  key.classList.add("playing")                                            //add class .playing to key
+}
+                                                                                      //STEP 4
+const keys = document.querySelectorAll(".key")                                 //select each key 
+keys.forEach((key) => key.addEventListener("transitionend", removeTransition)) //for each key pressed, removeTransition
+                                                                                  //STEP 1
+window.addEventListener("keydown", playSound)                                  //on key down, playSound
+
+1 - Listen to keydown, run playSound
+2/2.5 - Run playSound, select audio by data-key and if audio present, play audio and add .playing transition
+3 - removes .playing transition from key pressed
+4 - Listen for keys and remove transition
+-->
