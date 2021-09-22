@@ -28,15 +28,14 @@
       ];
 
       const friends = [
-        {first: "Conrad", last: "Richscheidt", year: "1991", passed: "2069"}
-        {first: "Peter", last: "Gringras", year: "1990", passed: "2045"}
-        {first: "Alex", last: "Veneracion", year: "1989", passed: "2072"}
-        {first: "JP", last: "Solt", year: "1991", passed: "2073"}
-        {first: "Phil", last: "Wagner", year: "1989", passed: "2068"}
-        {first: "John", last: "Weber", year: "1990", passed: "2068"}
-        {first: "Jeff", last: "Mollet", year: "1989", passed: "2065"}
-
-      ]
+        { first: "Conrad", last: "Richscheidt", year: 1991, passed: 2069 },
+        { first: "Peter", last: "Gringras", year: 1990, passed: 2045 },
+        { first: "Alex", last: "Veneracion", year: 1989, passed: 2072 },
+        { first: "JP", last: "Solt", year: 1991, passed: 2073 },
+        { first: "Phil", last: "Wagner", year: 1989, passed: 2068 },
+        { first: "John", last: "Weber", year: 1990, passed: 2068 },
+        { first: "Jeff", last: "Mollet", year: 1989, passed: 2069 },
+      ];
 
       const people = [
         "Bernhard, Sandra",
@@ -81,41 +80,80 @@
         "Beecher, Henry",
         "Biondo, Frank",
       ];
+      const buddies = [
+        "Richtscheidt, Conrad",
+        "Gringras, Peter",
+        "Veneracion, Alex",
+        "Solt, JP",
+        "Wagner, Phil",
+        "Weber, John",
+        "Mollet, Jeff",
+      ];
 
+      ////////////////////////////////////////////////////////////////////////////////
       // Array.prototype.filter()
       // 1. Filter the list of inventors for those who were born in the 1500's
-      const fifteen = inventors.filter(
-        (inventor) => inventor.year >= 1500 && inventor.year < 1600
-      );
-      console.table(fifteen);
-
+      // const fifteen = inventors.filter(
+      //   (inventor) => inventor.year >= 1500 && inventor.year < 1600
+      // );
+      // console.table(fifteen);
+      ////////////////////////////
+      // Filter the list of friends for those who were born in the 90's
+      const nineties = friends.filter((friend) => friend.year >= 1990);
+      console.table(nineties);
+      ////////////////////////////////////////////////////////////////////////////////
       // Array.prototype.map()
       // 2. Give us an array of the inventors first and last names
-      const fullNames = inventors.map(
-        (inventor) => `${inventor.first} ${inventor.last}`
-      );
-      console.log(fullNames);
-
+      // const fullNames = inventors.map(
+      //   (inventor) => `${inventor.first} ${inventor.last}`
+      // );
+      // console.log(fullNames);
+      ////////////////////////////
+      // Give us an array of the friends first and last names
+      const names = friends.map((friend) => `${friend.first} ${friend.last}`);
+      console.log(names);
+      ////////////////////////////////////////////////////////////////////////////////
       // Array.prototype.sort()
       // 3. Sort the inventors by birthdate, oldest to youngest
-      const ordered = inventors.sort((a, b) => (a.year > b.year ? 1 : -1));
-      console.table(ordered);
-
+      // const ordered = inventors.sort((a, b) => (a.year > b.year ? 1 : -1));
+      // console.table(ordered);
+      ////////////////////////////
+      // Sort the friends by birthdate, oldest to youngest
+      const byBirthdate = friends.sort(function (a, b) {
+        return a.year - b.year;
+        // (descending -- (b.year -a.year))
+      });
+      console.log(byBirthdate);
+      ////////////////////////////////////////////////////////////////////////////////
       // Array.prototype.reduce()
       // 4. How many years did all the inventors live all together?
-      const lived = inventors.reduce((total, inventor) => {
-        return total + (inventor.passed - inventor.year);
+      // const lived = inventors.reduce((total, inventor) => {
+      //   return total + (inventor.passed - inventor.year);
+      // }, 0);
+      // console.log(lived);
+      ////////////////////////////
+      // How many years did all the friends live all together?
+      const allYears = friends.reduce(function (total, friend) {
+        return total + (friend.passed - friend.year);
       }, 0);
-      console.log(lived);
-
+      console.log(allYears);
+      ////////////////////////////////////////////////////////////////////////////////
       // 5. Sort the inventors by years lived
-      const oldest = inventors.sort((a, b) => {
-        const lastGuy = a.passed - a.year;
-        const nextGuy = b.passed - a.year;
-        return lastGuy > nextGuy ? -1 : 1;
+      // const oldest = inventors.sort((a, b) => {
+      //   const lastGuy = a.passed - a.year;
+      //   const nextGuy = b.passed - a.year;
+      //   return lastGuy > nextGuy ? -1 : 1;
+      // });
+      // console.table(oldest);
+      ////////////////////////////
+      // Sort friends by years lived
+      const yearsLived = friends.sort((a, b) => {
+        const x = a.passed - a.year;
+        const y = b.passed - b.year;
+        return a > b ? -1 : 1;
       });
-      console.table(oldest);
 
+      ////////////////////////////////////////////////////////////////////////////////
       // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
       // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
       //Run this code only on wiki page
@@ -126,44 +164,81 @@
       // const de = links
       //   .map((link) => link.textContent)
       //   .filter((streetName) => streetName.includes("de"));
-      //------
+      ////////////////////////////
+      // https://en.wikipedia.org/wiki/List_of_Walt_Disney_Pictures_films
+      // const list = document.querySelector(".mw-parser-output");
+      // const tables = list.querySelectorAll("table");
+      // const links = Array.from(list.querySelectorAll("i"));
 
+      // const the = links
+      //   .map((link) => link.textContent)
+      //   .filter((includesThe) => includesThe.includes("The"));
+      ////////////////////////////////////////////////////////////////////////////////
       // 7. sort Exercise
       // Sort the people alphabetically by last name
-      const alpha = people.sort((lastOne, nextOne) => {
-        const [aLast, aFirst] = lastOne.split(", ");
-        const [bLast, bFirst] = nextOne.split(", ");
+      // const alpha = people.sort((lastOne, nextOne) => {
+      //   const [aLast, aFirst] = lastOne.split(", ");
+      //   const [bLast, bFirst] = nextOne.split(", ");
+      //   return aLast > bLast ? 1 : -1;
+      // });
+      // console.log(alpha);
+      ////////////////////////////
+      const buds = buddies.sort((firstBud, secondBud) => {
+        const [aLast, aFirst] = firstBud.split(", ");
+        const [bLast, bFirst] = secondBud.split(", ");
         return aLast > bLast ? 1 : -1;
       });
-      console.log(alpha);
-
+      console.log(buds);
+      ////////////////////////////////////////////////////////////////////////////////
       // 8. Reduce Exercise
       // Sum up the instances of each of these
+      // const data = [
+      //   "car",
+      //   "car",
+      //   "truck",
+      //   "truck",
+      //   "bike",
+      //   "walk",
+      //   "car",
+      //   "van",
+      //   "bike",
+      //   "walk",
+      //   "car",
+      //   "van",
+      //   "car",
+      //   "truck",
+      //   "pogostick",
+      // ];
+      // const transportation = data.reduce((obj, item) => {
+      //   if (!obj[item]) {
+      //     obj[item] = 0;
+      //   }
+      //   obj[item]++;
+      //   return obj;
+      // }, {});
+      // console.log(transportation);
+      ////////////////////////////
       const data = [
-        "car",
-        "car",
-        "truck",
-        "truck",
-        "bike",
-        "walk",
-        "car",
-        "van",
-        "bike",
-        "walk",
-        "car",
-        "van",
-        "car",
-        "truck",
-        "pogostick",
+        "keyboard",
+        "guitar",
+        "guitar",
+        "drums",
+        "keyboard",
+        "drums",
+        "bass",
+        "drums",
+        "guitar",
+        "drums",
       ];
-      const transportation = data.reduce((obj, item) => {
+      const instruments = data.reduce((obj, item) => {
         if (!obj[item]) {
           obj[item] = 0;
         }
         obj[item]++;
         return obj;
-      }, {});
-      console.log(transportation);
+      });
+      console.log(instruments);
+      ////////////////////////////////////////////////////////////////////////////////
     </script>
   </body>
 </html>
